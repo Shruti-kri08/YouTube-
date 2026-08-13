@@ -8,7 +8,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon start"
+    "start":"node start"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
