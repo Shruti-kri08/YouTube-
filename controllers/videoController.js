@@ -141,9 +141,9 @@ const getVideo = async (req, res) => {
     try {
         const video = await Video.find()
        
-        const videoRes = await video.save()
+      
         res.status(200).json({
-            video: videoRes
+            video
         })
     }
     catch (err) {
