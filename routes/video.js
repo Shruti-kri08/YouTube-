@@ -1,5 +1,5 @@
 const express=require('express')
-const { upload,like,dislike,getVideoById,updateVideo,deleteVideo,getVideoByChannelId} = require('../controllers/videoController')
+const { upload,like,dislike,getVideo,updateVideo,deleteVideo,getVideoByChannelId} = require('../controllers/videoController')
 const router=express.Router()
 
 
@@ -9,7 +9,7 @@ router.post('/like/:videoId',like)
 
 router.post('/dislike/:videoId',dislike)
 
-router.get('/:videoId',getVideoById)
+router.get('/:videoId',getVideo)
 
 router.put('/update/:videoId',updateVideo)
 

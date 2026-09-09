@@ -35,7 +35,8 @@ const upload = async (req, res) => {
             videoPublicId: uploadVideo.public_id,
             thumbnailUrl: uploadThumbnail.secure_url,
             thumbnailPublicId: uploadThumbnail.public_id,
-            uploadedBy: tokenData._id
+            uploadedBy: tokenData._id,
+            tags:req.body.tags
 
         })
 
@@ -136,10 +137,10 @@ const dislike = async (req, res) => {
 }
 
 //Get video 
-const getVideoById = async (req, res) => {
+const getVideo = async (req, res) => {
     try {
-        const video = await Video.findById(req.params.videoId)
-        video.views += 1
+        const video = await Video.find()
+       
         const videoRes = await video.save()
         res.status(200).json({
             video: videoRes
@@ -174,6 +175,7 @@ const updateVideo=async(req,res)=>{
         //if tokenData._id is id of video owner 
             video.title=req.body.title,
             video.description=req.body.description
+            video.tags=req.body.tags
 
         const updatedVideo=await video.save()
 
@@ -249,7 +251,8 @@ module.exports = {
     upload,
     like,
     dislike,
-    getVideoById,
+    getVideo,
+    getVideoByChannelId,
     updateVideo,
     deleteVideo,
     getVideoByChannelId
