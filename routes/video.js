@@ -9,7 +9,7 @@ router.post('/like/:videoId',like)
 
 router.post('/dislike/:videoId',dislike)
 
-router.get('/:videoId',getVideo)
+router.get('/',getVideo)
 
 router.put('/update/:videoId',updateVideo)
 
