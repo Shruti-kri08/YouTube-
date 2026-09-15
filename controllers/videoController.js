@@ -139,7 +139,7 @@ const dislike = async (req, res) => {
 //Get video 
 const getVideo = async (req, res) => {
     try {
-        const video = await Video.find()
+        const video = await Video.find().populate('uploadedBy','channelName,profileImageUrl')
        
       
         res.status(200).json({
