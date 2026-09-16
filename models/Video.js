@@ -19,7 +19,7 @@ const videoSchema=new mongoose.Schema({
 
   category: [{
     type: String,
-    enum: ["Comedy", "Education", "Gaming", "Music", "Technology"]
+    enum: ["Comedy", "Education", "Gaming", "Technology" ,"Fashion","Food","Other"]
 }],
 
     videoUrl: {
