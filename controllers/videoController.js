@@ -35,6 +35,7 @@ const upload = async (req, res) => {
             videoPublicId: uploadVideo.public_id,
             thumbnailUrl: uploadThumbnail.secure_url,
             thumbnailPublicId: uploadThumbnail.public_id,
+            category:req.body.category,
             uploadedBy: tokenData._id,
             tags:req.body.tags
 
@@ -176,7 +177,8 @@ const updateVideo=async(req,res)=>{
         //if tokenData._id is id of video owner 
             video.title=req.body.title,
             video.description=req.body.description
-            video.tags=req.body.tags
+            video.tags=req.body.tags,
+            video.category=req.body.category
 
         const updatedVideo=await video.save()
 
