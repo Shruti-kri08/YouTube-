@@ -11,6 +11,9 @@ router.post('/dislike/:videoId',dislike)
 
 router.get('/',getVideo)
 
+router.get('/videoById/:id',getVideoByChannelId)
+
+
 router.put('/update/:videoId',updateVideo)
 
 router.delete('/delete/:videoId',deleteVideo)
