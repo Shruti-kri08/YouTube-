@@ -158,6 +158,21 @@ const getVideo = async (req, res) => {
     }
 }
 
+const videoById=async(req,res)=>{
+    try{
+
+        const video=await Video.findById({_id:req.params.id})
+        res.status(200).json({video})
+    }
+     catch(err){
+        console.log(err);
+        res.status(500).json({
+            error: err
+        })
+    }
+}
+
+
 //update video info by video owner
 const updateVideo=async(req,res)=>{
     try{
@@ -258,5 +273,6 @@ module.exports = {
     getVideoByChannelId,
     updateVideo,
     deleteVideo,
-    getVideoByChannelId
+    getVideoByChannelId,
+    videoById
 }
