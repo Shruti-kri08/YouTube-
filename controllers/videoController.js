@@ -142,6 +142,7 @@ const getVideo = async (req, res) => {
     try {
         const video = await Video.find().populate('uploadedBy','channelName profileImageUrl')
        console.log(video);
+      
        
       
         res.status(200).json({
@@ -161,8 +162,11 @@ const getVideo = async (req, res) => {
 const videoById=async(req,res)=>{
     try{
 
-        const video=await Video.findById({_id:req.params.id})
+        const video=await Video.findById({_id:req.params.id}).populate('uploadedBy','channelName profileImageUrl')
+         video.views+=1;
+       await video.save()
         res.status(200).json({video})
+
     }
      catch(err){
         console.log(err);
@@ -255,6 +259,8 @@ const getVideoByChannelId=async(req,res)=>{
     try{
 
         const video=await Video.find({uploadedBy:req.params.channelId}).select('thumbnailUrl title')
+         video.views+=1;
+       await video.save()
         res.status(200).json({video})
     }
      catch(err){
