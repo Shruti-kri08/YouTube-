@@ -140,7 +140,7 @@ const dislike = async (req, res) => {
 //Get video 
 const getVideo = async (req, res) => {
     try {
-        const video = await Video.find().populate('uploadedBy','channelName profileImageUrl')
+        const video = await Video.find().populate('uploadedBy','channelName profileImageUrl subscriber')
        console.log(video);
       
        
@@ -162,7 +162,7 @@ const getVideo = async (req, res) => {
 const videoById=async(req,res)=>{
     try{
 
-        const video=await Video.findById({_id:req.params.id}).populate('uploadedBy','channelName profileImageUrl')
+        const video=await Video.findById({_id:req.params.id}).populate('uploadedBy','channelName profileImageUrl,')
          video.views+=1;
        await video.save()
         res.status(200).json({video})
