@@ -74,7 +74,7 @@ const like = async (req, res) => {
         if (video.likeUser.includes(tokenData._id)) {
             video.likeUser = video.likeUser.filter(id => (id.toString() !== tokenData._id))
             const videoRes = await video.save()
-            res.status(200).json({ video: videoRes })
+            res.status(200).json({ video: videoRes.likeUser,isLike:false })
         }
         else {
             //if user disliked the video then first remove the dislike and then like 
@@ -83,7 +83,7 @@ const like = async (req, res) => {
             }
             video.likeUser.push(tokenData._id)
             const videoRes = await video.save()
-            res.status(200).json({ video: videoRes })
+            res.status(200).json({ video: videoRes.likeUser,isLike:true })
         }
 
     }
@@ -113,7 +113,7 @@ const dislike = async (req, res) => {
         if (video.dislikeUser.includes(tokenData._id)) {
             video.dislikeUser = video.dislikeUser.filter(id => (id.toString() !== tokenData._id))
             const videoRes = await video.save()
-            res.status(200).json({ video: videoRes })
+            res.status(200).json({ video: videoRes.dislikeUser,isDislike:false })
         }
         else {
             //if user liked the video than first remove the like and then dislike the video
@@ -122,7 +122,7 @@ const dislike = async (req, res) => {
             }
             video.dislikeUser.push(tokenData._id)
             const videoRes = await video.save()
-            res.status(200).json({ video: videoRes })
+            res.status(200).json({ video: videoRes.dislikeUser,isDislike:false })
         }
 
 
@@ -142,11 +142,17 @@ const getVideo = async (req, res) => {
     try {
         const video = await Video.find().populate('uploadedBy','channelName')
        console.log(video);
-      
+       var isLike;
+      if(req.headers.authorization){
+        const token=req.headers.authorization.split(" ")[1]
+        const tokenData=jwt.verify(token,process.env.JWT_SECRET)
+        isLike=video.likeUser.includes(tokenData._id)
+      }
        
       
         res.status(200).json({
-            video
+            video,
+            isLike
         })
     }
     catch (err) {
