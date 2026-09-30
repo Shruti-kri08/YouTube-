@@ -165,6 +165,8 @@ const videoById=async(req,res)=>{
        if(req.headers.authorization){
         const token=req.headers.authorization.split(" ")[1]
         const tokenData=jwt.verify(token,process.env.JWT_SECRET)
+        console.log(tokenData,token);
+        
         isLike=video.likeUser.includes(tokenData._id)
         console.log(isLike);
         
