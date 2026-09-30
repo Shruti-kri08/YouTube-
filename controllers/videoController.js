@@ -142,13 +142,8 @@ const getVideo = async (req, res) => {
     try {
         const video = await Video.find().populate('uploadedBy','channelName')
        console.log(video);
-       var isLike;
-      if(req.headers.authorization){
-        const token=req.headers.authorization.split(" ")[1]
-        const tokenData=jwt.verify(token,process.env.JWT_SECRET)
-      }     
         res.status(200).json({
-            video,
+            video
         })
     }
     catch (err) {
@@ -166,8 +161,12 @@ const videoById=async(req,res)=>{
 
         const video=await Video.findById({_id:req.params.id}).populate('uploadedBy','channelName profileImageUrl subscriber')
          video.views+=1;
+          var isLike;
+       if(req.headers.authorization){
+        const token=req.headers.authorization.split(" ")[1]
+        const tokenData=jwt.verify(token,process.env.JWT_SECRET)
         isLike=video.likeUser.includes(tokenData._id)
-
+      }
        await video.save()
         res.status(200).json({video,isLike})
 
