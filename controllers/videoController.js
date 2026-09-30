@@ -122,7 +122,7 @@ const dislike = async (req, res) => {
             }
             video.dislikeUser.push(tokenData._id)
             const videoRes = await video.save()
-            res.status(200).json({ video: videoRes.dislikeUser,isDislike:false })
+            res.status(200).json({ video: videoRes.dislikeUser,isDislike:true })
         }
 
 
