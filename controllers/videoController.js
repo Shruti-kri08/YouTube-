@@ -159,9 +159,10 @@ const getVideo = async (req, res) => {
 const videoById=async(req,res)=>{
     try{
 
-        const video=await Video.findById({_id:req.params.id}).populate('uploadedBy','channelName profileImageUrl subscriber')
+        const video=await Video.findById(req.params.id).populate('uploadedBy','channelName profileImageUrl subscriber')
          video.views+=1;
-          var isLike;
+          var isLike=false;
+          
        if(req.headers.authorization){
         const token=req.headers.authorization.split(" ")[1]
         const tokenData=jwt.verify(token,process.env.JWT_SECRET)
