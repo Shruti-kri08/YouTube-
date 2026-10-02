@@ -105,14 +105,18 @@ const subscribe = async (req, res) => {
         }
         channel.subscriber.push(tokenData._id);
         await channel.save();
-        console.log("subscirbe successfully");
-        res.status(200).json({ message: "subscirbe successfully" })
 
-        const user = await User.findById(tokenData._id)
-        user.subscribedTo.push(channel._id)
+           const user = await User.findById(tokenData._id)
+         user.subscribedTo.push(channel._id)
         await user.save()
         console.log(user);
 
+         console.log("subscirbe successfully");
+
+        res.status(200).json({ message: "subscirbe successfully" ,user})
+
+     
+       
 
     }
     catch (err) {

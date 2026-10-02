@@ -173,9 +173,8 @@ const videoById=async(req,res)=>{
         const user=await User.findById(tokenData._id)
 
         likeStatus=video.likeUser.includes(tokenData._id)
-        dislikeStatus=video.dislikeUser.includes(tokenData._id)
-        console.log(likeStatus);
-        subscribeStatus=user.subscribedTo.includes(video._id)
+        dislikeStatus=video.dislikeUser.includes(tokenData._id)   
+        subscribeStatus=user.subscribedTo.includes(video.uploadedBy._id)
         
       }
 
