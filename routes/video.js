@@ -5,9 +5,9 @@ const router=express.Router()
 
 router.post('/upload',upload)
 
-router.post('/like/:videoId',like)
+router.put('/like/:videoId',like)
 
-router.post('/dislike/:videoId',dislike)
+router.put('/dislike/:videoId',dislike)
 
 router.get('/',getVideo)
 

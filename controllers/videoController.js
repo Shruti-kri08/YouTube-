@@ -2,6 +2,7 @@ const cloudinaryConfig = require("../config/cloudinary")
 const cloudinary = require("cloudinary").v2;
 const Video = require('../models/Video')
 const jwt = require('jsonwebtoken')
+const User = require('../models/User')
 
 
 //upload video
@@ -161,19 +162,49 @@ const videoById=async(req,res)=>{
 
         const video=await Video.findById(req.params.id).populate('uploadedBy','channelName profileImageUrl subscriber')
          video.views+=1;
-          var isLike=false;
+          var likeStatus=false;
+          var dislikeStatus=false;
+          var subscribeStatus=false;
           
        if(req.headers.authorization){
         const token=req.headers.authorization.split(" ")[1]
         const tokenData=jwt.verify(token,process.env.JWT_SECRET)
         console.log(tokenData,token);
-        
-        isLike=video.likeUser.includes(tokenData._id)
-        console.log(isLike);
+        const user=await User.findById(tokenData._id)
+
+        likeStatus=video.likeUser.includes(tokenData._id)
+        dislikeStatus=video.dislikeUser.includes(tokenData._id)
+        console.log(likeStatus);
+        subscribeStatus=user.subscribedTo.includes(video._id)
         
       }
+
        await video.save()
-        res.status(200).json({video,isLike})
+       const newRes={
+        title:video.title,
+        description:video.description,
+        tags:video.tags,
+        category:video.category,
+        videoUrl:video.videoUrl,
+        videoPublicId:video.videoPublicId,
+        thumbnailUrl:video.thumbnailUrl,
+        thumbnailPublicId:video.thumbnailPublicId,
+        views:video.views,
+        uploadedBy:{
+            _id:video.uploadedBy._id,
+            channelName:video.uploadedBy.channelName,
+            profileImageUrl:video.uploadedBy.profileImageUrl,
+            
+
+        },
+
+        comment:video.comment,
+        likeStatus:video.likeStatus,
+        dislikeStatus:video.dislikeStatus
+
+
+       }
+        res.status(200).json({newRes,likeStatus,dislikeStatus,subscribeStatus})
 
     }
      catch(err){
