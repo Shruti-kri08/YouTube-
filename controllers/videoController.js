@@ -190,6 +190,8 @@ const videoById=async(req,res)=>{
         thumbnailUrl:video.thumbnailUrl,
         thumbnailPublicId:video.thumbnailPublicId,
         views:video.views,
+        likeCount:video.likeUser.length(),
+        dislikeCount:video.dislikeUser.length(),
         uploadedBy:{
             _id:video.uploadedBy._id,
             channelName:video.uploadedBy.channelName,
