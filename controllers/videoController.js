@@ -58,86 +58,7 @@ const upload = async (req, res) => {
     }
 
 }
-
-//Like api
-const like = async (req, res) => {
-    try {
-        const token = req.headers.authorization.split(" ")[1]
-        const tokenData = jwt.verify(token, process.env.JWT_SECRET)
-        const videoId = req.params.videoId
-        const video = await Video.findById(videoId)
-        if (!video) {
-            return res.status(500).json({
-                message: "Video not found"
-            })
-        }
-        //if user already liked the video then just remove the like
-        if (video.likeUser.includes(tokenData._id)) {
-            video.likeUser = video.likeUser.filter(id => (id.toString() !== tokenData._id))
-            const videoRes = await video.save()
-            res.status(200).json({ video: videoRes.likeUser,isLike:false })
-        }
-        else {
-            //if user disliked the video then first remove the dislike and then like 
-            if (video.dislikeUser.includes(tokenData._id)) {
-                video.dislikeUser = video.dislikeUser.filter(id => (id.toString() !== tokenData._id))
-            }
-            video.likeUser.push(tokenData._id)
-            const videoRes = await video.save()
-            res.status(200).json({ video: videoRes.likeUser,isLike:true })
-        }
-
-    }
-    catch (err) {
-
-        console.log(err);
-        res.status(500).json({
-            error: err
-        })
-
-    }
-}
-
-//Dislike api
-const dislike = async (req, res) => {
-    try {
-        const token = req.headers.authorization.split(" ")[1]
-        const tokenData = jwt.verify(token, process.env.JWT_SECRET)
-        const videoId = req.params.videoId
-        const video = await Video.findById(videoId)
-        if (!video) {
-            return res.status(500).json({
-                message: "Video not found"
-            })
-        }
-        //if user already disliked the video then just remove dislike
-        if (video.dislikeUser.includes(tokenData._id)) {
-            video.dislikeUser = video.dislikeUser.filter(id => (id.toString() !== tokenData._id))
-            const videoRes = await video.save()
-            res.status(200).json({ video: videoRes.dislikeUser,isDislike:false })
-        }
-        else {
-            //if user liked the video than first remove the like and then dislike the video
-            if (video.likeUser.includes(tokenData._id)) {
-                video.likeUser = video.likeUser.filter(id => (id.toString() !== tokenData._id))
-            }
-            video.dislikeUser.push(tokenData._id)
-            const videoRes = await video.save()
-            res.status(200).json({ video: videoRes.dislikeUser,isDislike:true })
-        }
-
-
-    }
-    catch (err) {
-
-        console.log(err);
-        res.status(500).json({
-            error: err
-        })
-
-    }
-}
-
+w
 //Get video 
 const getVideo = async (req, res) => {
     try {
@@ -206,7 +127,7 @@ const videoById=async(req,res)=>{
 
 
        }
-        res.status(200).json({newRes,likeStatus,dislikeStatus,subscribeStatus})
+        res.status(200).json({video:newRes,likeStatus,dislikeStatus,subscribeStatus})
 
     }
      catch(err){
