@@ -123,7 +123,7 @@ const dislike = async (req, res) => {
             }
             video.dislikeUser.push(tokenData._id)
             const videoRes = await video.save()
-            res.status(200).json({ video: videoRes.dislikeUser,isDislike:true })
+            res.status(200).json({ video: videoRes,isDislike:true })
         }
 
 
@@ -190,8 +190,8 @@ const videoById=async(req,res)=>{
         thumbnailUrl:video.thumbnailUrl,
         thumbnailPublicId:video.thumbnailPublicId,
         views:video.views,
-        likeCount:video.likeUser.length(),
-        dislikeCount:video.dislikeUser.length(),
+        likeCount:video.likeUser.length,
+        dislikeCount:video.dislikeUser.length,
         uploadedBy:{
             _id:video.uploadedBy._id,
             channelName:video.uploadedBy.channelName,
@@ -206,7 +206,7 @@ const videoById=async(req,res)=>{
 
 
        }
-        res.status(200).json({newRes,likeStatus,dislikeStatus,subscribeStatus})
+        res.status(200).json({data:newRes,likeStatus,dislikeStatus,subscribeStatus})
 
     }
      catch(err){
