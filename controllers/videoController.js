@@ -200,8 +200,9 @@ const videoById=async(req,res)=>{
         },
 
         comment:video.comment,
-        likeStatus:video.likeStatus,
-        dislikeStatus:video.dislikeStatus
+        likeStatus:likeStatus,
+        dislikeStatus:dislikeStatus,
+        subscribeStatus:subscribeStatus
 
 
        }
