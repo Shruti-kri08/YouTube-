@@ -171,7 +171,7 @@ const videoById=async(req,res)=>{
 
         console.log(token);
         
-        if(token){
+        if(token && token !== "null"){
              const tokenData=jwt.verify(token,process.env.JWT_SECRET)
         console.log(tokenData,token);
         const user=await User.findById(tokenData._id)
