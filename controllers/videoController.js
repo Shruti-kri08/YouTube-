@@ -168,7 +168,8 @@ const videoById=async(req,res)=>{
           
        if(req.headers.authorization){
         const token=req.headers.authorization.split(" ")[1]
-        const tokenData=jwt.verify(token,process.env.JWT_SECRET)
+        if(token){
+             const tokenData=jwt.verify(token,process.env.JWT_SECRET)
         console.log(tokenData,token);
         const user=await User.findById(tokenData._id)
 
@@ -176,6 +177,8 @@ const videoById=async(req,res)=>{
         dislikeStatus=video.dislikeUser.includes(tokenData._id)   
         subscribeStatus=user.subscribedTo.includes(video.uploadedBy._id)
         
+        }
+       
       }
 
        await video.save()
