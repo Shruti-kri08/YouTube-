@@ -168,6 +168,9 @@ const videoById=async(req,res)=>{
           
        if(req.headers.authorization){
         const token=req.headers.authorization.split(" ")[1]
+
+        console.log(token);
+        
         if(token){
              const tokenData=jwt.verify(token,process.env.JWT_SECRET)
         console.log(tokenData,token);
@@ -180,6 +183,7 @@ const videoById=async(req,res)=>{
         }
        
       }
+      
 
        await video.save()
        const newRes={
