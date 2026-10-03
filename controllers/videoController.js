@@ -206,7 +206,7 @@ const videoById=async(req,res)=>{
 
 
        }
-        res.status(200).json({data:newRes,likeStatus,dislikeStatus,subscribeStatus})
+        res.status(200).json({data:newRes})
 
     }
      catch(err){
@@ -317,7 +317,6 @@ module.exports = {
     like,
     dislike,
     getVideo,
-    getVideoByChannelId,
     updateVideo,
     deleteVideo,
     getVideoByChannelId,
