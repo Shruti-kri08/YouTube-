@@ -17,6 +17,12 @@ const commentSchema=new mongoose.Schema(
                 ref:'User',
             }
         ],
+        disLike:[
+            {
+                 type:mongoose.Schema.Types.ObjectId,
+                ref:'User',
+            }
+        ],
         commentText:{
             type:String,
             trim:true,

@@ -1,5 +1,5 @@
 const express=require('express')
-const { addComment,getComment,updateComment ,deleteComment, commentLike} = require('../controllers/commentController')
+const { addComment,getComment,updateComment ,deleteComment, commentLike, commentDislike} = require('../controllers/commentController')
 const router=express.Router()
 
 
@@ -12,5 +12,7 @@ router.put('/update/:commentId', updateComment)
 router.delete('/delete/:commentId', deleteComment)
 
 router.put('/like/:commentId',commentLike)
+
+router.put('/dislike/:commentId',commentDislike)
 
 module.exports=router
