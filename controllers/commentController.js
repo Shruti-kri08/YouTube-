@@ -167,21 +167,28 @@ const deleteComment = async (req, res) => {
 
 const commentLike = async (req, res) => {
     try {
+        var  commentLikeStatus=false
         const token = req.headers.authorization.split(" ")[1]
         const tokenData = jwt.verify(token, process.env.JWT_SECRET)
         const comment = await Comment.findById(req.params.commentId)
         if (comment.like.includes(tokenData._id)) {
             comment.like = comment.like.filter((id) => (tokenData._id !== id.toString()))
+            commentLikeStatus=false
         }
         else {
             if (comment.disLike.includes(tokenData._id)) {
                 comment.disLike = comment.disLike.filter(id => (id.toString() !== tokenData._id))
             }
             comment.like.push(tokenData._id)
+            commentLikeStatus=true
 
         }
         const commentRes = await comment.save()
-        res.status(200).json({ video: commentRes })
+        res.status(200).json({commentBy:commentRes.commentBy,
+            videoId:commentRes.videoId,
+            commentText:commentRes.commentText,
+            likeStatus:commentLikeStatus,
+         })
 
     }
     catch (err) {
@@ -195,21 +202,26 @@ const commentLike = async (req, res) => {
 
 const commentDislike = async (req, res) => {
     try {
+        var commentDislikeStatus=false
         const token = req.headers.authorization.split(" ")[1]
         const tokenData = jwt.verify(token, process.env.JWT_SECRET)
         const comment = await Comment.findById(req.params.commentId)
         if (comment.disLike.includes(tokenData._id)) {
             comment.disLike = comment.disLike.filter((id) => (tokenData._id !== id.toString()))
+            commentDislikeStatus=false
         }
         else {
             if (comment.like.includes(tokenData._id)) {
                 comment.like = comment.like.filter(id => (id.toString() !== tokenData._id))
             }
-            comment.disLike.push(tokenData._id)
-
+            comment.disLike.push(tokenData._id) 
+            commentDislikeStatus=true
         }
         const commentRes = await comment.save()
-        res.status(200).json({ video: commentRes })
+        res.status(200).json({ commentBy:commentRes.commentBy,
+            videoId:commentRes.videoId,
+            commentText:commentRes.commentText,
+            dislikeStatus:commentDislikeStatus, })
 
     }
     catch (err) {
