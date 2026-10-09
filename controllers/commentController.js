@@ -41,9 +41,7 @@ const getComment = async (req, res) => {
         const video = await Video.findById(req.params.videoId).select('comment')
         const comments = await Comment.find({ videoId: req.params.videoId }).populate('commentBy', 'channelName profileImageUrl').select('commentBy commentText like disLike')
 
-        var likeStatus = false;
-        var dislikeStatus = false;
-
+       
         if (!video) {
             return res.status(500).json({
                 error: "video not found",
