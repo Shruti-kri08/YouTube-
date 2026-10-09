@@ -143,7 +143,7 @@ const deleteComment = async (req, res) => {
         const tokenData = jwt.verify(token, process.env.JWT_SECRET)
         const comment = await Comment.findById(req.params.commentId)
         const video = await Video.findById(comment.videoId)
-        if (comment.commentBy.toString() !== tokenData._id || video.uploadedBy.toString() !== tokenData._id) {
+        if (comment.commentBy.toString() !== tokenData._id && video.uploadedBy.toString() !== tokenData._id) {
             return res.status(500).json({
                 message: "you are not allowed"
             })
