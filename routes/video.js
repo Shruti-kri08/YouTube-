@@ -1,5 +1,5 @@
 const express=require('express')
-const { upload,like,dislike,getVideo,updateVideo,deleteVideo,getVideoByChannelId, videoById} = require('../controllers/videoController')
+const { upload,like,dislike,getVideo,updateVideo,deleteVideo,getVideoByChannelId, videoById, allVideoByChannelId} = require('../controllers/videoController')
 const router=express.Router()
 
 
@@ -20,4 +20,5 @@ router.delete('/delete/:videoId',deleteVideo)
 
 router.get('/videoByChannelId/:channelId',getVideoByChannelId)
 
+router.get('/allVideoByChannelId/:channelId',allVideoByChannelId)
 module.exports=router

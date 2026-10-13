@@ -10,7 +10,7 @@ const upload = async (req, res) => {
     try {
         const token = req.headers.authorization.split(" ")[1]
         const tokenData = jwt.verify(token, process.env.JWT_SECRET)
-
+        
         if (!req.files || !req.files.video) {
             return res.status(500).json({
                 message: "Video required"
@@ -224,6 +224,21 @@ const videoById=async(req,res)=>{
     }
 }
 
+const allVideoByChannelId=async(req,res)=>{
+    try{
+        const videos=await Video.find({uploadedBy:req.params.channelId})
+        if(videos){
+            return res.status(200).json(videos)
+        }
+        return res.status(404).json({message:"video not found"})
+
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({error:err})
+        
+    }
+}
 
 //update video info by video owner
 const updateVideo=async(req,res)=>{
@@ -306,7 +321,7 @@ const deleteVideo=async(req,res)=>{
 const getVideoByChannelId=async(req,res)=>{
     try{
 
-        const video=await Video.find({uploadedBy:req.params.channelId}).select('thumbnailUrl title')
+        const video=await Video.findOne({uploadedBy:req.params.channelId}).select('thumbnailUrl title')
          video.views+=1;
        await video.save()
         res.status(200).json({video})
@@ -327,5 +342,6 @@ module.exports = {
     updateVideo,
     deleteVideo,
     getVideoByChannelId,
-    videoById
+    videoById,
+    allVideoByChannelId
 }
