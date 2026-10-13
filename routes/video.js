@@ -21,4 +21,5 @@ router.delete('/delete/:videoId',deleteVideo)
 router.get('/videoByChannelId/:channelId',getVideoByChannelId)
 
 router.get('/allVideoByChannelId/:channelId',allVideoByChannelId)
+
 module.exports=router
