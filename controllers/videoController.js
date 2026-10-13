@@ -226,7 +226,7 @@ const videoById=async(req,res)=>{
 
 const allVideoByChannelId=async(req,res)=>{
     try{
-        const videos=await Video.find({uploadedBy:req.params.channelId})
+        const videos=await Video.find({uploadedBy:req.params.channelId}).populate('uploadedBy','channelName profileImageUrl subscriber')
         console.log(videos);
         
         if(videos){
