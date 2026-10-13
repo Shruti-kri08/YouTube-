@@ -323,8 +323,8 @@ const getVideoByChannelId=async(req,res)=>{
 
         const video=await Video.findOne({uploadedBy:req.params.channelId}).select('thumbnailUrl title')
          video.views+=1;
-       await video.save()
-        res.status(200).json({video})
+       const videoRes = await video.save()
+        res.status(200).json({videoRes})
     }
      catch(err){
         console.log(err);
