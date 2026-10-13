@@ -320,21 +320,21 @@ const deleteVideo=async(req,res)=>{
     }
 }
 
-// const getVideoByChannelId=async(req,res)=>{
-//     try{
+const getVideoByChannelId=async(req,res)=>{
+    try{
 
-//         const video=await Video.findOne({uploadedBy:req.params.channelId}).select('thumbnailUrl title')
-//          video.views+=1;
-//        const videoRes = await video.save()
-//         res.status(200).json({videoRes})
-//     }
-//      catch(err){
-//         console.log(err);
-//         res.status(500).json({
-//             error: err
-//         })
-//     }
-// }
+        const video=await Video.findOne({uploadedBy:req.params.channelId}).select('thumbnailUrl title')
+         video.views+=1;
+       const videoRes = await video.save()
+        res.status(200).json({videoRes})
+    }
+     catch(err){
+        console.log(err);
+        res.status(500).json({
+            error: err
+        })
+    }
+}
 
 module.exports = {
     upload,
