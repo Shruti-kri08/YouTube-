@@ -191,7 +191,7 @@ const uploadProfileImage = async (req, res) => {
         }
         if(user.profileImageId){
 
-            await cloudinary.uploader.delete(user.profileImageId)
+            await cloudinary.uploader.destroy(user.profileImageId)
         }
         const uploadImage = await cloudinary.uploader.upload(req.files.profileImage.tempFilePath, {
             folder: "YouTube/userProfile"
