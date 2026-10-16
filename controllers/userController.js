@@ -343,17 +343,11 @@ const updateChannnelDetail=async(req,res)=>{
         }
         
         if(req.body.password){
-           const isMatch= await bcrypt.compare(req.body.oldPassword,channel.password)
-            if(isMatch){
+           
                 const hash=await bcrypt.hash(req.body.password,10)
                 channel.password=hash
             }
-            else{
-                return res.status(500).json({
-                    error:"Old password mismatch"
-                })
-            }
-        }
+        
         channel.channelName=req.body.channelName
         channel.description=req.body.description
 
